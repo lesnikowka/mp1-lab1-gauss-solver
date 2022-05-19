@@ -7,32 +7,20 @@ std::vector<Vector> GaussSolver:: solve(const Matrix& matr_, const Vector& add_)
 	Matrix matr = matr_;
 	Vector add = add_;
 	Vector onlysolution(matr.getM());
-	bool flag;
 	std::vector<int> numb;
 	int max;
 
 	for (int i = 0; i < std::min<int>(matr.getM(), matr.getN()); i++) {
-		flag = true;
 		max = i;
 		for (int j = i; j < matr.getM(); j++)
 			if (abs(matr[j][i]) > abs(matr[max][i])) max = j;
-		
-		if (abs(matr[i][i]) > accuracy && matr[i][i] >= matr[i][max]) {  
-			flag = false;
-			zeroing(matr, add, i);
-			indep.push_back(i);
-		}
-		else if (nonullcol(matr, add, i) && i < matr.getM() - 1) {
-			flag = false;
-			indep.push_back(i);
-			//swap(matr, add, i);
+
+		if (abs(matr[i][i]) > accuracy || nonullcol(matr, add, i)) {
 			swap(matr, add, i, max);
 			zeroing(matr, add, i);
+			indep.push_back(i);
 		}
-		else if (abs(matr[i][i]) > accuracy) {
-			zeroing(matr, add, i);
-		}
-		if (flag)
+		else
 			dep.push_back(i);
 	}
 
@@ -140,13 +128,14 @@ void GaussSolver::printsolution() {
 }
 
 void GaussSolver::swap(Matrix& matr, Vector& add, int i1, int i2) {
-	
-	Vector tmp = matr[i1];
-	double tmp2 = add[i1];
-	matr[i1] = matr[i2];
-	add[i1] = add[i2];
-	matr[i2] = tmp;
-	add[i2] = tmp2;
+	if (i1 != i2) {
+		Vector tmp = matr[i1];
+		double tmp2 = add[i1];
+		matr[i1] = matr[i2];
+		add[i1] = add[i2];
+		matr[i2] = tmp;
+		add[i2] = tmp2;
+	}
 }
 
 std::vector<int> GaussSolver::numbernonullstr(const Matrix& matr) {
