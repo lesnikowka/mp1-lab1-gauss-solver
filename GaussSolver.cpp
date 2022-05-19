@@ -1,7 +1,7 @@
 #include "GaussSolver.h"
 #include <cmath>
 
-GaussSolver:: GaussSolver():accuracy(0.000000000000001){}
+GaussSolver:: GaussSolver():accuracy(0.0000000001){}
 
 std::vector<Vector> GaussSolver:: solve(const Matrix& matr_, const Vector& add_) {
 	Matrix matr = matr_;
@@ -26,7 +26,7 @@ std::vector<Vector> GaussSolver:: solve(const Matrix& matr_, const Vector& add_)
 			flag = false;
 			indep.push_back(i);
 			//swap(matr, add, i);
-			swap2(matr, add, i, max);
+			swap(matr, add, i, max);
 			zeroing(matr, add, i);
 		}
 		else if (abs(matr[i][i]) > accuracy) {
@@ -130,7 +130,7 @@ void GaussSolver::printsolution() {
 		for (int i = 1; i < solutions.size(); i++) {
 			std::cout << " + t" << i << "( ";
 			for (int j = 0; j < indep.size(); j++)
-				i < indep.size() ? std::cout << solutions[i][j] << ", " : std::cout<<solutions[i][j];
+				std::cout << solutions[i][j] << ", ";
 			std::cout << " )";
 		}
 		std::cout << std::endl;
@@ -138,21 +138,8 @@ void GaussSolver::printsolution() {
 			std::cout << "x" << dep[i] + 1 << " = " << "t" << i + 1 << std::endl;
 	}
 }
-void GaussSolver::swap(Matrix& matr, Vector& add, int i1) {
-	Vector tmp; double tmp2;
-	for (int i = i1 + 1; i < matr.getM(); i++)
-		if (abs(matr[i][i1])>accuracy) {
-			tmp = matr[i];
-			tmp2 = add[i];
-			matr[i] = matr[i1];
-			add[i] = add[i1];
-			matr[i1] = tmp;
-			add[i1] = tmp2;
-			break;
-		}
-}
 
-void GaussSolver::swap2(Matrix& matr, Vector& add, int i1, int i2) {
+void GaussSolver::swap(Matrix& matr, Vector& add, int i1, int i2) {
 	
 	Vector tmp = matr[i1];
 	double tmp2 = add[i1];

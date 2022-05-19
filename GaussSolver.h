@@ -22,10 +22,8 @@ public:
 	void zeroing(Matrix& matr, Vector& add, int i1);
 
 	void printsolution();
-		
-	void swap(Matrix& matr, Vector& add, int i1);
 
-	void swap2(Matrix& matr, Vector& add, int i1, int i2);
+	void swap(Matrix& matr, Vector& add, int i1, int i2);
 
 	int getstate() { return state; }
 
