@@ -135,6 +135,12 @@ int Vector::getsize() const {
 	return n;
 }
 
-
+void Vector::swap(int i1, int i2) {
+	if (i1 != i2) {
+		double tmp = data[i1];
+		data[i1] = data[i2];
+		data[i2] = tmp;
+	}
+}
 
 int Vector::counter = 0;

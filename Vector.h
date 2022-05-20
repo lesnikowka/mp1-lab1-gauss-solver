@@ -47,6 +47,7 @@ public:
 	double& operator[](int i);  //return v.data[i]
 	double& operator[](int i) const;
 	int getsize() const;
+	void swap(int i1, int i2);
 
 	static int getcounter() { return counter; }
 

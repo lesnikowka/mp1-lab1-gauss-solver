@@ -5,27 +5,24 @@
 #include <vector>
 
 class GaussSolver {
-	int state; // 0 - solutions don't exist  1 - only   2 - many
 	std::vector<Vector> solutions;
-	std::vector<int> dep, indep;  // dep - indices of dependent variables  indep - indices of independent variables
+	std::vector<bool> dep_elements;
+	std::vector<int> columns_main_elements;
+	std::vector<int> rows_main_elements;
+	int numb_dep_elements;
+
 	double accuracy;
 
 public:
 	GaussSolver();
 
-	std::vector<Vector> solve(const Matrix& matr_, const Vector& add_);
-
-	bool nonullcol(const Matrix& matr, const Vector& add, int i1);  
+	std::vector<Vector> solve(const Matrix& matr_, const Vector& add_); 
 
 	bool isjoint(const Matrix& matr, const Vector& add);  
 
-	void zeroing(Matrix& matr, Vector& add, int i1);
-
-	void printsolution();
+	void zeroing(Matrix& matr, Vector& add, int i1, int j1);
 
 	void swap(Matrix& matr, Vector& add, int i1, int i2);
-
-	int getstate() { return state; }
 
 	std::vector<int> numbernonullstr(const Matrix& matr);
 };
