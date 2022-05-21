@@ -17,9 +17,9 @@ std::vector<Vector> GaussSolver::solve(const Matrix& matr_, const Vector& add_) 
 	for(int j = 0; j < matr.getN(); j++){
 		max = i;
 		for (int m = 0; m < matr.getM(); m++)
-			if ((!used_string[m]) && abs(matr[m][j]) > abs(matr[max][j])) max = m;
+			if (!used_string[m] && abs(matr[m][j]) > abs(matr[max][j])) max = m;
 
-		if (abs(matr[max][j]) > accuracy) {
+		if (abs(matr[max][j]) > accuracy && !used_string[max]) {
 			dep_elements[j] = 0;
 			swap(matr, add, i, max);
 			used_string.swap(i, max);
@@ -36,6 +36,7 @@ std::vector<Vector> GaussSolver::solve(const Matrix& matr_, const Vector& add_) 
 
 		if (i < matr.getM()-1) i++;
 	}
+	std::cout << matr << add;
 
 	numb_no_null_str = numbernonullstr(matr);
 	
@@ -52,7 +53,7 @@ std::vector<Vector> GaussSolver::solve(const Matrix& matr_, const Vector& add_) 
 				column[i] = dep_elements[i] ? 0 : add[rows_main_elements[i]];
 			solutions.push_back(column);
 			
-
+	
 			for (int i = 0; i < matr.getN(); i++)
 				if (dep_elements[i]) {
 					for (int j = 0; j < matr.getN(); j++)
