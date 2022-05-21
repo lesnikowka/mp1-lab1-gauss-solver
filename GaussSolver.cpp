@@ -5,7 +5,7 @@ GaussSolver:: GaussSolver():accuracy(0.0000000001),numb_dep_elements(0){}
 
 std::vector<Vector> GaussSolver::solve(const Matrix& matr_, const Vector& add_) {
 	Matrix matr = matr_;
-	Vector add = add_, onlysolution(matr.getM());
+	Vector add = add_, onlysolution(matr.getN());
 	std::vector<int> numb_no_null_str;
 	dep_elements.resize(matr.getN());
 	columns_main_elements.resize(matr.getM());
