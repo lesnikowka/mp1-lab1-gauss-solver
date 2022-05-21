@@ -36,7 +36,7 @@ std::vector<Vector> GaussSolver::solve(const Matrix& matr_, const Vector& add_) 
 
 		if (i < matr.getM()-1) i++;
 	}
-	std::cout << matr << add;
+	
 
 	numb_no_null_str = numbernonullstr(matr);
 	
