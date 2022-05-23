@@ -6,11 +6,14 @@ GaussSolver:: GaussSolver():accuracy(0.0000000001),numb_dep_elements(0){}
 std::vector<Vector> GaussSolver::solve(const Matrix& matr_, const Vector& add_) {
 	Matrix matr = matr_;
 	Vector add = add_, onlysolution(matr.getN());
+
 	std::vector<int> numb_no_null_str;
+
 	dep_elements.resize(matr.getN());
 	columns_main_elements.resize(matr.getM());
 	rows_main_elements.resize(matr.getN());
-	Vector used_string(matr.getM());
+	used_string.resize(matr.getM());
+
 	int max, i = 0;
 
 
@@ -20,10 +23,12 @@ std::vector<Vector> GaussSolver::solve(const Matrix& matr_, const Vector& add_) 
 			if (!used_string[m] && abs(matr[m][j]) > abs(matr[max][j])) max = m;
 
 		if (abs(matr[max][j]) > accuracy && !used_string[max]) {
+		
 			dep_elements[j] = 0;
+
 			swap(matr, add, i, max);
-			used_string.swap(i, max);
 			zeroing(matr, add, i, j);
+
 			used_string[i] = 1;
 			columns_main_elements[i] = j;
 			rows_main_elements[j] = i;
@@ -58,6 +63,7 @@ std::vector<Vector> GaussSolver::solve(const Matrix& matr_, const Vector& add_) 
 				if (dep_elements[i]) {
 					for (int j = 0; j < matr.getN(); j++)
 						column[j] = 0;
+
 					for (int j = 0; j < numb_no_null_str.size(); j++) 
 						column[columns_main_elements[numb_no_null_str[j]]] = -matr[numb_no_null_str[j]][i];
 					
@@ -103,14 +109,20 @@ void GaussSolver::zeroing(Matrix& matr, Vector& add, int i1, int j1) {
 }
 
 
-void GaussSolver::swap(Matrix& matr, Vector& add, int i1, int i2) {
-	if (i1 != i2) {
-		Vector tmp = matr[i1];
-		matr[i1] = matr[i2];
-		matr[i2] = tmp;
-		add.swap(i1, i2);
-	}
-	
+void GaussSolver::swap(Matrix& matr, Vector& add, int i, int max) {
+	if (i != max) {
+		Vector tmp = matr[i];
+		matr[i] = matr[max];
+		matr[max] = tmp;
+		add.swap(i, max);
+
+		used_string.swap(i, max);
+
+		if (rows_main_elements[columns_main_elements[i]] == i) {
+			rows_main_elements[columns_main_elements[i]] = max;
+			columns_main_elements[max] = columns_main_elements[i];
+		}
+	}	
 }
 
 std::vector<int> GaussSolver::numbernonullstr(const Matrix& matr) {

@@ -9,6 +9,7 @@ class GaussSolver {
 	std::vector<bool> dep_elements;
 	std::vector<int> columns_main_elements;
 	std::vector<int> rows_main_elements;
+	Vector used_string;
 	int numb_dep_elements;
 
 	double accuracy;
