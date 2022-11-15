@@ -11,19 +11,17 @@ class GaussSolver {
 	std::vector<int> rows_main_elements;
 	Vector used_string;
 	int numb_dep_elements;
-
 	double accuracy;
-
+	
+	
+	bool isjoint(const Matrix& matr, const Vector& add);  
+	void zeroing(Matrix& matr, Vector& add, int i1, int j1);
+	void swap(Matrix& matr, Vector& add, int i1, int i2);
+	std::vector<int> numbernonullstr(const Matrix& matr);
+	
 public:
 	GaussSolver();
 
 	std::vector<Vector> solve(const Matrix& matr_, const Vector& add_); 
 
-	bool isjoint(const Matrix& matr, const Vector& add);  
-
-	void zeroing(Matrix& matr, Vector& add, int i1, int j1);
-
-	void swap(Matrix& matr, Vector& add, int i1, int i2);
-
-	std::vector<int> numbernonullstr(const Matrix& matr);
 };
